@@ -18,7 +18,7 @@ public class UserController {
 
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
     @ResponseBody
-    public  User getUserInfo(String userId){
+    public  Object getUserInfo(String userId){
 
         User user =  userService.getUserInfo(userId);
         System.out.print(user.toString());
