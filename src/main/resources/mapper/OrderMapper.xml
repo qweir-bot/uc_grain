@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.demo.dao.OrderDao" >
-  <resultMap id="BaseResultMap" type="com.example.demo.domain.Order" >
-    <result column="order_id" property="id" jdbcType="VARCHAR" />
-    <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
-    <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
-  </resultMap>
+<mapper namespace="com.example.demo.dao.OrderDao">
+    <resultMap id="BaseResultMap" type="com.example.demo.domain.Order">
+        <result column="ORDER_ID" property="id" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR"/>
+    </resultMap>
 
-  <select id="getOrderInfo" resultMap="BaseResultMap" parameterType="java.util.Map">
+    <select id="getOrderInfo" resultMap="BaseResultMap" parameterType="java.util.Map">
     select * from t_grain_order
     where order_id = #{id};
   </select>
+
+    <!--新增-->
+    <insert id="insert" parameterType="java.util.Map">
+    insert into t_grain_order (ORDER_ID, CUSTOMER_ID, CUSTOMER_NAME)
+    values (#{id,jdbcType=VARCHAR}, #{customerId,jdbcType=VARCHAR},#{customerName,jdbcType=VARCHAR})
+    </insert>
+
+    <!--批量处理-->
+    <insert id="addBatchAssignDetail">
+        insert into t_grain_order (ORDER_ID, CUSTOMER_ID, CUSTOMER_NAME)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{id,jdbcType=VARCHAR}, #{customerId,jdbcType=VARCHAR},#{customerName,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+
+    <!-- 根据主键批量删除 -->
+    <delete id="batchDeleteByPrimaryKey" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            delete from t_grain_order where CODE_ID = #{item,jdbcType=BIGINT}
+        </foreach>
+    </delete>
 </mapper>

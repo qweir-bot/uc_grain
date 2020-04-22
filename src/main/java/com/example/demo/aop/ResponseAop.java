@@ -39,7 +39,8 @@ public class ResponseAop {
             }
         }  catch (Throwable throwable) {
             //如果出现了异常，调用异常处理方法将错误信息封装到ReturnVO中并返回
-            returnVO = handlerException(throwable);
+//            returnVO = handlerException(throwable);
+            throwable.printStackTrace();
         }
         return returnVO;
     }
