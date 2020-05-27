@@ -6,6 +6,8 @@ import com.example.demo.domain.Order;
 import com.example.demo.service.OrderService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+
+    private static Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     @Autowired
     private OrderDao orderDao;
@@ -28,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order getOrderInfo(String id) {
-
+        logger.info("lalal---------------------:" + id);
         long start,end;
         start = System.currentTimeMillis();
 
